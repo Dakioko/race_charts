@@ -2,12 +2,11 @@ import pandas as pd
 import bar_chart_race as bcr
 
 # Load data
-data = pd.read_csv("SOPs_June_17.csv")
-data = data.set_index('date')
+data = pd.read_csv("SOPs_7_7_25.csv").set_index('Date')
 
 bcr.bar_chart_race(
     df=data,
-    filename='SOPs_F.mp4',
+    filename='SOPs_Latest.mp4',
     title={
         'label': 'SOPs Requests Over Time',
         'size': 48,
@@ -22,9 +21,10 @@ bcr.bar_chart_race(
     orientation='h',
     sort='desc',
     n_bars=10,
-    steps_per_period=30,  # Reduced from 45
-    period_length=1500,  # Reduced from 2000
-    #fixed_max=True,
+    steps_per_period=30,  
+    period_length=1500,  
+     interpolate_period=True,  
+    fixed_max=True,
     filter_column_colors=True,
     
     period_label={

@@ -2,19 +2,18 @@ import bar_chart_race as bcr
 import pandas as pd
 
 # Load and prepare data
-df = pd.read_csv("data.csv").set_index("year")
-print(df.index.dtype)  # Verify index is int64
+df = pd.read_csv("east_africa_population.csv").set_index("Year") / 1_000_000
 
 # Define colors and styling
 colors = [
     "#CE1126", "#0072C6", "#F55536", "#FCD116", "#018749",
-    "#00A1DE", "#D81920", "#4189DD", "#000000", "#17B636", "#FFD700"
+    "#00A1DE", "#4189DD", "#000000", "#D81920", "#17B636", "#FFD700"
 ]
 
 # Create the bar chart race
 bcr.bar_chart_race(
     df=df,
-    filename="Population_4.mp4",
+    filename="Population_July_2025.mp4",
     img_label_folder="bar_image_labels",
 
     # Figure settings
@@ -29,14 +28,18 @@ bcr.bar_chart_race(
     sort="desc",
     n_bars=11,
     steps_per_period=30,
-    period_length=1500,
+    period_length=1387,
+    interpolate_period=True,
+    fixed_order=False,  # Allows natural ranking changes
+    bar_size=.9,  # Makes bars slightly more dynamic
+    fixed_max=True,  # Keep x-axis consistent
 
     # Colors
     colors=colors,
 
     # Title (updated)
     title={
-        'label': 'Eastern Africa Population (1960 - 2022) \nSource: World Bank',
+        'label': 'Eastern Africa Population (1960 - 2024) \nSource: World Bank',
         'size': 48,
         'weight': 'bold',
         'pad': 12,
@@ -56,7 +59,7 @@ bcr.bar_chart_race(
     # Summary (updated to show millions)
     period_summary_func=lambda v, r: {
         'x': .99, 'y': .1,
-        's': f'Total: {v.sum() / 1_000_000:,.1f}M\n@kioko_steve',
+        's': f'Total: {v.sum():,.1f}M\n @kioko_Steve',
         'ha': 'right',
         'size': 24,
         'weight': 'semibold'
@@ -73,6 +76,6 @@ bcr.bar_chart_race(
     },
 
     # Number formatting
-    bar_texttemplate='{x:,.0f}',
+    bar_texttemplate='{x:,.1f}M',
     period_template='{x:.0f}'
 )
